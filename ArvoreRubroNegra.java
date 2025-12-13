@@ -32,43 +32,34 @@ public class ArvoreRubroNegra {
             }
         }
 
-        private String posOrdem() {
-            if (this.data == null) {
-                return "(null - preto)";
-            } else {
-                return this.leftChild.posOrdem() + " - " + this.rigthChild.posOrdem() + " - " + this.data;
-            }
-        }
-
-        private String preOrdem() {
-            if (this.data == null) {
-                return "(null - preto)";
-            } else {
-                return this.data + " - " + this.leftChild.preOrdem() + " - " + this.rigthChild.preOrdem();
-            }
-        }
-
-        public String toString() {
-            return this.ordem();
-        }
-
-        public String toString(int ordenacao) {
-            switch (ordenacao) {
-                case 0:
-                    return this.preOrdem();
-                
-                case 1:
-                    return this.ordem();
-            
-                case 2:
-                    return this.posOrdem();
-                
-                default:
-                    return this.ordem();
-            }
-        }
     }
+
+    private Node root;
+
+    ArvoreRubroNegra() {
+        this.root = new Node(null);
+    }
+
+    public void insert(int data) {
+        if (this.root.data == null) {
+            this.root = new Node(data);
+            return;
+        }
+        Node no = this.root;
+        while (no.data != null) {
+            if (data > no.data) {
+                no = no.rigthChild;
+            } else {
+                no = no.leftChild;
+            }
+        }
+        no = new Node(data);
+    }
+
+    public String toString() {
+        return this.root.ordem();
+    }
+
     public static void main(String[] args) {
-        
-    }
+
 }
