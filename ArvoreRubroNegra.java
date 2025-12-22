@@ -294,5 +294,4 @@ public class ArvoreRubroNegra {
         printInOrder(node.right);
 }
 
-
 }
