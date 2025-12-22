@@ -19,6 +19,10 @@ public class ArvoreRB {
             this.left = esq;
             this.right = dir;
         }
+
+        public void switchColor() {
+            this.color = !this.color;
+        }
     }
 
     private final Node nil = new Node(null, NEGRO);
@@ -41,6 +45,92 @@ public class ArvoreRB {
             }
         }
         return false;
+    }
+
+    private Node brothers(Node node) {
+        Node parent = node.parent;
+        return (isLeftChild(node, parent)) ? parent.right : parent.left;
+    }
+
+    private Node grandparent(Node node) {
+        return node.parent.parent;
+    }
+
+    private boolean isLeftChild(Node node, Node parent) {
+        return parent.left.key == node.key;
+    }
+
+    private void rightRotation(Node node, Node parent, Node grandparent) {
+        grandparent.right = new Node(grandparent.key, !grandparent.color, parent.right, grandparent.right);
+        grandparent.right.parent = grandparent;
+
+        grandparent.key = parent.key;
+
+        grandparent.left.parent = null;
+        grandparent.left.left = null;
+        grandparent.left = node;
+        node.parent = grandparent;
+    }
+
+    private void leftRotation(Node node, Node parent, Node grandparent) {
+        grandparent.left = new Node(grandparent.key, !grandparent.color, grandparent.left, parent.left);
+        grandparent.left.parent = grandparent;
+
+        grandparent.key = parent.key;
+
+        grandparent.right.parent = null;
+        grandparent.right.right = null;
+        grandparent.right = node;
+        node.parent = grandparent;
+    }
+
+    private void rotacao(Node node, Node parent, Node grandparent) {
+        if (isLeftChild(node, parent) && isLeftChild(parent, grandparent)) {
+            rightRotation(node, parent, grandparent);
+            return;
+        }
+
+        if (!isLeftChild(node, parent) && isLeftChild(parent, grandparent)) {
+            //Rotação dupla a direita
+            return;
+        }
+
+        if (isLeftChild(node, parent) && !isLeftChild(parent, grandparent)) {
+            //Rotação dupla a esquerda
+            return;
+        }
+
+        if (!isLeftChild(node, parent) && !isLeftChild(parent, grandparent)) {
+            leftRotation(node, parent, grandparent);
+            return;
+        }
+    }
+
+    private void fixInsert(Node node) {
+        if (node.parent.color == NEGRO) {
+            return;
+        }
+        if (node.parent.color == RUBRO && grandparent(node).color == NEGRO && brothers(node.parent).color == RUBRO) {
+            Node a, p, t;
+            a = grandparent(node);
+            p = node.parent;
+            t = brothers(node.parent);
+
+            a.switchColor();
+            p.switchColor();
+            t.switchColor();
+
+            if (a.key == this.root.key || a.parent.key == this.root.key) {
+                return;
+            } else {
+                fixInsert(a);
+                return;
+            }
+        }
+        if (node.parent.color == RUBRO && grandparent(node).color == NEGRO && brothers(node.parent).color == NEGRO) {
+            //rotações
+            rotacao(node, node.parent, grandparent(node));
+        }
     }
 
     public void insert(int x) {
@@ -69,9 +159,11 @@ public class ArvoreRB {
         if (x < node.key) {
             node.left = new Node(x, RUBRO, nil, nil);
             node.left.parent = node;
+            fixInsert(node.left);
         } else {
             node.right = new Node(x, RUBRO, nil, nil);
             node.right.parent = node;
+            fixInsert(node.right);
         }
     }
 
