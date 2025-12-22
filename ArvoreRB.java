@@ -1,4 +1,4 @@
-public class ArvoreRubroNegra {
+public class ArvoreRB {
     private static final boolean RED = true;
     private static final boolean BLACK = false;
 
@@ -16,7 +16,7 @@ public class ArvoreRubroNegra {
     private final Node nil = new Node(0, BLACK);
     private Node root;
 
-    ArvoreRubroNegra() {
+    ArvoreRB() {
         this.root = nil;
     }
 
