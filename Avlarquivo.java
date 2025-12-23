@@ -1,4 +1,3 @@
-//Autor: Felipe Lisboa Brasil
 public class Avlarquivo {
 
     public class node{
@@ -212,6 +211,3 @@ public void imprimirArvore(){
         System.out.println("Buscar 99: " + Avl.buscarIterativo(99));
     }
 }
-
-
-
