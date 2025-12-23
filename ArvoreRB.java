@@ -87,7 +87,7 @@ public class ArvoreRB {
     }
 
     private void doubleRightRotation(Node node, Node parent, Node grandparent) {
-        grandparent.right = new Node(grandparent.key, grandparent.color, parent.right, grandparent.right);
+        grandparent.right = new Node(grandparent.key, !grandparent.color, node.right, grandparent.right);
         grandparent.right.parent = grandparent;
 
         grandparent.key = node.key;
@@ -98,7 +98,7 @@ public class ArvoreRB {
     }
 
     private void doubleLeftRotation(Node node, Node parent, Node grandparent) {
-        grandparent.left = new Node(grandparent.key, !grandparent.color, grandparent.left, parent.left);
+        grandparent.left = new Node(grandparent.key, !grandparent.color, grandparent.left, node.left);
         grandparent.left.parent = grandparent;
 
         grandparent.key = node.key;
@@ -130,7 +130,7 @@ public class ArvoreRB {
         }
     }
 
-    private void fixInsert(Node node) {
+    private void balancear(Node node) {
         if (node.parent.color == NEGRO) {
             return;
         }
@@ -147,7 +147,7 @@ public class ArvoreRB {
             if (a.key == this.root.key || a.parent.key == this.root.key) {
                 return;
             } else {
-                fixInsert(a);
+                balancear(a);
                 return;
             }
         }
@@ -183,11 +183,11 @@ public class ArvoreRB {
         if (x < node.key) {
             node.left = new Node(x, RUBRO, nil, nil);
             node.left.parent = node;
-            fixInsert(node.left);
+            balancear(node.left);
         } else {
             node.right = new Node(x, RUBRO, nil, nil);
             node.right.parent = node;
-            fixInsert(node.right);
+            balancear(node.right);
         }
         if (this.root.color == RUBRO) {
             this.root.switchColor();
@@ -212,8 +212,8 @@ public class ArvoreRB {
     public static void main(String[] args) {
         ArvoreRB a = new ArvoreRB();
         System.out.println(a);
-        int[] b = {40, 20, 10, 50, 25, 60};
-        for (int i = 0; i < 6; i++) {
+        int[] b = {50,40,60,70,55,80,65,90};
+        for (int i = 0; i < b.length; i++) {
             a.insert(b[i]);
         }
         System.out.println(a);
