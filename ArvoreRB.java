@@ -1,3 +1,5 @@
+//Autor: Gian Victor Gonçalves Figueiredo
+
 public class ArvoreRB {
 
     private final boolean RUBRO = false;
