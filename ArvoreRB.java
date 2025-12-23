@@ -84,6 +84,28 @@ public class ArvoreRB {
         node.parent = grandparent;
     }
 
+    private void doubleRightRotation(Node node, Node parent, Node grandparent) {
+        grandparent.right = new Node(grandparent.key, grandparent.color, parent.right, grandparent.right);
+        grandparent.right.parent = grandparent;
+
+        grandparent.key = node.key;
+
+        parent.right.parent = null;
+        parent.right = node.left;
+        parent.right.parent = parent;
+    }
+
+    private void doubleLeftRotation(Node node, Node parent, Node grandparent) {
+        grandparent.left = new Node(grandparent.key, !grandparent.color, grandparent.left, parent.left);
+        grandparent.left.parent = grandparent;
+
+        grandparent.key = node.key;
+
+        parent.left.parent = null;
+        parent.left = node.right;
+        parent.left.parent = parent;
+    }
+
     private void rotacao(Node node, Node parent, Node grandparent) {
         if (isLeftChild(node, parent) && isLeftChild(parent, grandparent)) {
             rightRotation(node, parent, grandparent);
@@ -91,12 +113,12 @@ public class ArvoreRB {
         }
 
         if (!isLeftChild(node, parent) && isLeftChild(parent, grandparent)) {
-            //Rotação dupla a direita
+            doubleRightRotation(node, parent, grandparent);
             return;
         }
 
         if (isLeftChild(node, parent) && !isLeftChild(parent, grandparent)) {
-            //Rotação dupla a esquerda
+            doubleLeftRotation(node, parent, grandparent);
             return;
         }
 
@@ -165,6 +187,9 @@ public class ArvoreRB {
             node.right.parent = node;
             fixInsert(node.right);
         }
+        if (this.root.color == RUBRO) {
+            this.root.switchColor();
+        }
     }
 
     public String toString() {
@@ -179,16 +204,16 @@ public class ArvoreRB {
             return "";
         }
         String key = node.key + (node.color ? "(N)" : "(R)");
-        return toString(node.left) + " " + key + " " + toString(node.right);
+        return key + " " + toString(node.left)  + " " + toString(node.right);
     }
 
     public static void main(String[] args) {
         ArvoreRB a = new ArvoreRB();
         System.out.println(a);
-        a.insert(20);
-        System.out.println(a);
-        a.insert(10);
-        a.insert(40);
+        int[] b = {40, 20, 10, 50, 25, 60};
+        for (int i = 0; i < 6; i++) {
+            a.insert(b[i]);
+        }
         System.out.println(a);
     }
 }
