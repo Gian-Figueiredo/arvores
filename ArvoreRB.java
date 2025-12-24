@@ -282,7 +282,7 @@ public class ArvoreRB {
                 }
 
                 if (brother.right.color == RUBRO) {
-                    leftRotation(parent, brother, brother.right);
+                    leftRotation(brother.right, brother, parent);
                     parent.left.color = NEGRO;
                     parent.right.color = NEGRO;
                     if (this.root.color == RUBRO) {
@@ -319,7 +319,7 @@ public class ArvoreRB {
                 }
 
                 if (brother.left.color == RUBRO) {
-                    rightRotation(parent, brother, brother.right);
+                    rightRotation(brother.right, brother, parent);
                     parent.right.color = NEGRO;
                     parent.left.color = NEGRO;
                     if (this.root.color == RUBRO) {
@@ -374,6 +374,10 @@ public class ArvoreRB {
         }
     }
 
+    public String display() {
+        return toString();
+    }
+
     public String toString() {
         if (this.root == null) {
             return "Empty Tree";
@@ -393,9 +397,25 @@ public class ArvoreRB {
         ArvoreRB a = new ArvoreRB();
         int[] b = {90,100,110,120,50,60,70,80,10,20,30,40,130,140,150,160};
         for (int i = 0; i < b.length; i++) {
-            System.out.println(a);
             a.insert(b[i]);
         }
+        System.out.println(a);
+        a.remove(130);
+        a.insert(155);
+        a.remove(140);
+        a.insert(75);
+        a.remove(110);
+        a.remove(150);
+        a.remove(20);
+        a.remove(50);
+        a.remove(90);
+        a.insert(190);
+        a.insert(200);
+        a.remove(200);
+        a.remove(155);
+        a.remove(75);
+        System.out.println(a);
+        a.remove(80);
         System.out.println(a);
     }
 }
