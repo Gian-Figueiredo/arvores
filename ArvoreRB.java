@@ -1,3 +1,9 @@
+/*
+AUTORES:
+    GIAN VICTOR GONÇALVES FIGUEIREDO
+    FELIPE LISBOA BRASIL
+*/
+
 public class ArvoreRB {
     //Árvore Rubro Negra que não aceita valor repetido e possui critério de sucessor para remoções.
     //Apenas se não houver um sucessor que é uilizado o critério de antecessor

@@ -1,4 +1,8 @@
-//Autor: Felipe Lisboa Brasil
+/*
+AUTORES:
+    GIAN VICTOR GONÇALVES FIGUEIREDO
+    FELIPE LISBOA BRASIL
+*/
 public class Avlarquivo {
 
     public class node{
